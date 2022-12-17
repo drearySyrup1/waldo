@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { GlobalStyle } from "./components/styles/Global";
+import { ThemeProvider } from "styled-components";
+import TopBar from "./components/TopBar";
+import LevelSelect from "./components/LevelSelect";
+const theme = {
+  colors: {
+    body: "hsl(0 0% 13%)",
+    topbar: "hsl(0 0% 16%)",
+  },
+  mobile: {
+    L: "425px",
+  },
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyle />
+        <TopBar />
+        <LevelSelect />
+      </>
+    </ThemeProvider>
   );
 }
 

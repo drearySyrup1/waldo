@@ -1,0 +1,21 @@
+Topbar - hsl(0 0% 16%);
+Button - hsl(266 47% 99%);
+BG - hsl(0 0% 13%);
+
+GAMEPLAY SCREEN
+Topbar Character Display Circle BG - hsl(0 0% 12%);
+Topbar Character Display Circle Border - hsl(0 0% 25%);
+Check icon - hsl(114 64% 76%);
+Checked Circle Green - hsl(109 100% 100%);
+Click Box Selected Tile - hsl(0 0% 19%);
+Click Box Not Select Tile - hsl(0 0% 16%);
+
+LEADER BOARD SCREEN
+Entry BG - hsl(0 0% 18%);
+1st Place medal BG - hsl(56 100% 100%);
+2st Place medal BG - hsl(0 0% 80%);
+3st Place medal BG - hsl(32 56% 47%);
+
+ICON NAMES
+CHECKBOX - FaMedal
+Medal - ImCheckmark
