@@ -35,6 +35,12 @@ const StyledIcon = styled.a`
   }
 `;
 
+const GameGithub = styled(StyledIcon)`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const StyledSpan = styled.span`
   font-weight: bold;
   color: #fff;
@@ -51,6 +57,15 @@ const Icon = () => {
       <GithubIcon />
       <StyledSpan>drearySyrup1</StyledSpan>
     </StyledIcon>
+  );
+};
+
+export const GameIcon = () => {
+  return (
+    <GameGithub href="https://github.com">
+      <GithubIcon />
+      <StyledSpan>drearySyrup1</StyledSpan>
+    </GameGithub>
   );
 };
 

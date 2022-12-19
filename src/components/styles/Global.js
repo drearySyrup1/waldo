@@ -14,11 +14,13 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: ${({ theme }) => theme.colors.body}
+  background-color: ${({ theme }) => theme.colors.body};
+  overflow-x: hidden;
 }
 
-.birka {
-  display: none;
+
+.fadeout {
+  opacity: 0;
 }
 
 `;

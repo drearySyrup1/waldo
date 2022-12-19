@@ -1,7 +1,10 @@
 import { GlobalStyle } from "./components/styles/Global";
 import { ThemeProvider } from "styled-components";
-import TopBar from "./components/TopBar";
 import LevelSelect from "./components/LevelSelect";
+import Main from "./routes/Main";
+import Game from "./routes/Game";
+
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 const theme = {
   colors: {
     body: "hsl(0 0% 13%)",
@@ -14,13 +17,20 @@ const theme = {
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <TopBar />
-        <LevelSelect />
-      </>
-    </ThemeProvider>
+        <Routes>
+          <Route path="game/:id" element={<Game />} />
+          <Route path="/" element={<Main />}>
+            <Route index element={<LevelSelect />} />
+            <Route path="leader" element={"Leader"} />
+
+            <Route path="*" element={"NO PAGE"} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

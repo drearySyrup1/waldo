@@ -12,6 +12,7 @@ export const StyledLevelSelectCard = styled.div`
   position: relative;
   box-shadow: 0 0 25px rgb(0 0 0 / 0.6),
     inset 0 0 10px 2px rgb(0 0 0 / 0.6);
+  transition: all 300ms;
 
   ::after {
     content: "";
@@ -20,7 +21,16 @@ export const StyledLevelSelectCard = styled.div`
     width: 110%;
     height: 110%;
     opacity: 0;
-    transition: all 200ms;
+    transition: scale 500ms;
+  }
+
+  &:hover {
+    scale: 0.98;
+  }
+
+  &:active {
+    transition: scale 50ms;
+    scale: 0.95;
   }
 
   &:hover::after {
@@ -46,7 +56,7 @@ export const StyledLevelSelectCard = styled.div`
   }
 
   @media (width < 768px) {
-    width: 300px;
+    width: min(400px, 80vw);
     height: 530px;
   }
 `;
