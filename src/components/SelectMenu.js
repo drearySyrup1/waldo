@@ -30,12 +30,14 @@ const Option = styled.div`
   }
 `;
 
-const SelectMenu = ({ x, y, level }) => {
+const SelectMenu = ({ x, y, level, handleMenuSelect }) => {
   return (
     <Menu x={x} y={y}>
       {level.characters.map((item) => {
         return (
-          <Option>
+          <Option
+            onClick={() => handleMenuSelect(item.id, item.cords)}
+          >
             <PlayerCircle>
               <img
                 src={`/characters/${level.name}/${item.img}`}

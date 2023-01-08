@@ -10,6 +10,7 @@ import {
 import Point from "./Point";
 import CrossIcon from "./CrossIcon";
 import SelectMenu from "./SelectMenu";
+import { RxAlignCenterVertically } from "react-icons/rx";
 
 const POINT_SIZE = 50;
 
@@ -42,6 +43,13 @@ const GamePlay = ({ level }) => {
     x: 0,
     y: 0,
   });
+  const [whiteCircleLocation, setWhiteCircleLocation] = useState({
+    x: 0,
+    y: 0,
+    rect: {},
+  });
+  const [isWhiteCircleVisible, setIsWhiteCircleVisible] =
+    useState(false);
   const crossRef = useRef();
   const updateCrossRef = (newRef) => (crossRef.current = newRef);
 
@@ -62,9 +70,33 @@ const GamePlay = ({ level }) => {
     setCrossVisible(true);
   };
 
+  const handleMenuSelect = (id, cords) => {
+    console.log(cords);
+    if (
+      checkIfFound({
+        x: whiteCircleLocation.corner.x,
+        y: whiteCircleLocation.corner.y,
+        coords: cords,
+      })
+    ) {
+      addPoint({
+        x: whiteCircleLocation.x,
+        y: whiteCircleLocation.y,
+        green: true,
+      });
+      setIsWhiteCircleVisible(false);
+      setIsSelectVisible(false);
+    } else {
+      setIsWhiteCircleVisible(false);
+      setIsSelectVisible(false);
+      displayCross(cords.x, cords.y);
+    }
+  };
+
   const handleClick = (e) => {
     if (isSelectVisible) {
       setIsSelectVisible(false);
+      setIsWhiteCircleVisible(false);
       return;
     }
     const rect = imgWrapRef.current.getBoundingClientRect();
@@ -85,31 +117,39 @@ const GamePlay = ({ level }) => {
     const x = e.clientX - rect.left - 21; //x position within the element.
     const y = e.clientY - rect.top - 21; //y position within the element.
 
-    // check for overlap
-    for (let point of points) {
-      const overlap = !(
-        point.y > y + POINT_SIZE ||
-        point.x + POINT_SIZE < x ||
-        point.y + POINT_SIZE < y ||
-        point.x > x + POINT_SIZE
-      );
-      if (overlap) {
-        const cross = crossRef.current.children[0];
+    setIsWhiteCircleVisible(true);
+    setWhiteCircleLocation({
+      x: x,
+      y: y,
+      corner: {
+        x: crossX,
+        y: crossY,
+      },
+    });
 
-        // display and fadeout cross
-        setTimeout(() => {
-          cross.classList.add("fadeout");
-        }, 500);
-        displayCross(crossX, crossY);
-        return;
-      }
-    }
+    // // check for overlap
+    // for (let point of points) {
+    //   const overlap = !(
+    //     point.y > y + POINT_SIZE ||
+    //     point.x + POINT_SIZE < x ||
+    //     point.y + POINT_SIZE < y ||
+    //     point.x > x + POINT_SIZE
+    //   );
+    //   if (overlap) {
+    //     const cross = crossRef.current.children[0];
 
-    if (checkIfFound({ x: crossX, y: crossY, coords: owl })) {
-      addPoint({ x, y, green: true });
-    } else {
-      addPoint({ x, y, green: false });
-    }
+    //     // display and fadeout cross
+    //     setTimeout(() => {
+    //       cross.classList.add("fadeout");
+    //     }, 500);
+    //     displayCross(crossX, crossY);
+    //     return;
+    //   }
+    // }
+
+    // if (checkIfFound({ x: crossX, y: crossY, coords: owl })) {
+    //   addPoint({ x, y, green: true });
+    // }
 
     // addPoint({ x, y, });
   };
@@ -122,6 +162,7 @@ const GamePlay = ({ level }) => {
             level={level}
             x={selectLocation.x}
             y={selectLocation.y}
+            handleMenuSelect={handleMenuSelect}
           />
         )}
         <PointWrap ref={imgWrapRef} onClick={handleClick}>
@@ -131,6 +172,12 @@ const GamePlay = ({ level }) => {
             y={crossCords.y}
             updateref={updateCrossRef}
           />
+          {isWhiteCircleVisible && (
+            <Point
+              x={whiteCircleLocation.x}
+              y={whiteCircleLocation.y}
+            />
+          )}
           {points.map((point, index) => {
             return (
               <Point
