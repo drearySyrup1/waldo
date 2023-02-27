@@ -3,7 +3,7 @@ const levels = [
     id: "59930ddb-1f87-4730-9eb8-e34ca1c63f3d",
     title: "Big Tree",
     name: "BigTree",
-    image: "BigTree.png",
+    image: "BigTree.jpg",
     characters: [
       {
         name: "Owl",
@@ -19,13 +19,23 @@ const levels = [
       {
         name: "Rabbit",
         img: "rabbit.png",
-        cords: {},
+        cords: {
+          startX: 59.5468756875,
+          endX: 72.5468755,
+          startY: 317.53125,
+          endY: 341.53125,
+        },
         id: "32f03e32-b80a-4bcb-8b5d-ff0df3aafabb",
       },
       {
         name: "Woman",
         img: "woman.png",
-        cords: {},
+        cords: {
+          startX: 352.546875,
+          endX: 364.546875,
+          startY: 609.21875,
+          endY: 620.21875,
+        },
         id: "9651c103-bbeb-4e4f-91b0-4fcc45ff4a11",
       },
     ],

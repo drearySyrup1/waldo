@@ -10,8 +10,13 @@ import {
 import Point from "./Point";
 import CrossIcon from "./CrossIcon";
 import SelectMenu from "./SelectMenu";
-import { RxAlignCenterVertically } from "react-icons/rx";
-
+import { useDispatch, useSelector } from "react-redux";
+import { startTimer } from "../features/gameplay/gameplaySlice";
+import {
+  addFoundCharacter,
+  changeCharacter,
+  addNewPoint,
+} from "../features/gameplay/gameplaySlice";
 const POINT_SIZE = 50;
 
 const owl = {
@@ -35,7 +40,6 @@ const checkIfFound = ({ x, y, coords }) => {
 const GamePlay = ({ level }) => {
   const gameWrapRef = useRef(); // later to check for menu select if goes out of the screen
   const imgWrapRef = useRef();
-  const [points, setPoints] = useState([]);
   const [crossVisible, setCrossVisible] = useState(true);
   const [crossCords, setCrossCords] = useState({ x: 0, y: 0 });
   const [isSelectVisible, setIsSelectVisible] = useState(false);
@@ -48,6 +52,15 @@ const GamePlay = ({ level }) => {
     y: 0,
     rect: {},
   });
+  const dispatch = useDispatch();
+  const foundCharacters = useSelector(
+    (state) => state.gameplay.foundCharacters
+  );
+
+  const { stopCountdown, points } = useSelector(
+    (state) => state.gameplay
+  );
+  const { clearTimerFn } = useSelector((state) => state.gameplay);
   const [isWhiteCircleVisible, setIsWhiteCircleVisible] =
     useState(false);
   const crossRef = useRef();
@@ -60,14 +73,22 @@ const GamePlay = ({ level }) => {
     );
   }, []);
 
+  // to stop timer when all characeters are found
+  useEffect(() => {
+    if (foundCharacters.length === level.characters.length)
+      stopCountdown();
+  }, [foundCharacters, level.characters, stopCountdown]);
+
   const addPoint = ({ x, y, rect, green }) => {
-    const newPoints = [...points, { x, y, rect, green }];
-    setPoints(newPoints);
+    dispatch(addNewPoint({ x, y, rect, green }));
   };
 
   const displayCross = (x, y) => {
     setCrossCords({ x, y });
     setCrossVisible(true);
+    setTimeout(() => {
+      setCrossVisible(false);
+    }, 700);
   };
 
   const handleMenuSelect = (id, cords) => {
@@ -77,7 +98,8 @@ const GamePlay = ({ level }) => {
         x: whiteCircleLocation.corner.x,
         y: whiteCircleLocation.corner.y,
         coords: cords,
-      })
+      }) &&
+      !foundCharacters.includes(id)
     ) {
       addPoint({
         x: whiteCircleLocation.x,
@@ -86,14 +108,24 @@ const GamePlay = ({ level }) => {
       });
       setIsWhiteCircleVisible(false);
       setIsSelectVisible(false);
+      dispatch(addFoundCharacter(id));
     } else {
+      // dispaly cross
       setIsWhiteCircleVisible(false);
       setIsSelectVisible(false);
-      displayCross(cords.x, cords.y);
+      displayCross(
+        whiteCircleLocation.corner.x,
+        whiteCircleLocation.corner.y
+      );
     }
   };
 
   const handleClick = (e) => {
+    console.log(stopCountdown);
+    if (foundCharacters.length === level.characters.length) {
+      return;
+    }
+
     if (isSelectVisible) {
       setIsSelectVisible(false);
       setIsWhiteCircleVisible(false);
@@ -108,12 +140,18 @@ const GamePlay = ({ level }) => {
     const crossX = e.clientX - rect.left;
     const crossY = e.clientY - rect.top;
 
+    console.log(`
+      X: ${crossX}
+      Y: ${crossY}
+    `);
+
     setSelectLocation({
       x: crossX + POINT_SIZE,
       y: crossY,
     });
     setIsSelectVisible(true);
 
+    // 21 is offset for the circle to appear around the mouse in the center
     const x = e.clientX - rect.left - 21; //x position within the element.
     const y = e.clientY - rect.top - 21; //y position within the element.
 

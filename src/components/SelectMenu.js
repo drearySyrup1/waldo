@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import PlayerCircle from "./PlayerCircle";
 
@@ -31,22 +32,26 @@ const Option = styled.div`
 `;
 
 const SelectMenu = ({ x, y, level, handleMenuSelect }) => {
+  const { foundCharacters } = useSelector(
+    (state) => state.gameplay
+  );
   return (
     <Menu x={x} y={y}>
       {level.characters.map((item) => {
-        return (
-          <Option
-            onClick={() => handleMenuSelect(item.id, item.cords)}
-          >
-            <PlayerCircle>
-              <img
-                src={`/characters/${level.name}/${item.img}`}
-                alt=""
-              />
-            </PlayerCircle>
-            {item.name}
-          </Option>
-        );
+        if (!foundCharacters.includes(item.id))
+          return (
+            <Option
+              onClick={() => handleMenuSelect(item.id, item.cords)}
+            >
+              <PlayerCircle>
+                <img
+                  src={`/characters/${level.name}/${item.img}`}
+                  alt=""
+                />
+              </PlayerCircle>
+              {item.name}
+            </Option>
+          );
       })}
     </Menu>
   );

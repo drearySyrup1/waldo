@@ -27,6 +27,13 @@ export const StyledTopBarGame = styled.div`
   }
 `;
 
+export const ButtonWrap = styled.div`
+  grid-area: btn;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 10px;
+`;
+
 export const StyledTopbar = styled.div`
   width: min(1000px, 100%);
   display: grid;

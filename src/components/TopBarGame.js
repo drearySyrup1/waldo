@@ -4,42 +4,59 @@ import {
   StyledTopBarGame,
   CircleWrap,
   Timer,
+  ButtonWrap,
 } from "./styles/TopBar.styled";
+
+import {
+  setStopCountdown,
+  resetFoundCharacters,
+  resetPoints,
+} from "../features/gameplay/gameplaySlice";
 import { Button } from "./styles/Button.styled";
 import { GameIcon } from "./GithubIcon";
 import PlayerCircle from "./PlayerCircle";
-
-function formatTime(time) {
-  const hours = Math.floor(time / 3600);
-  const minutes = Math.floor((time - hours * 3600) / 60);
-  const seconds = time % 60;
-
-  const zeroPrefix = (time) => (time < 10 ? "0" : "");
-
-  const hourString =
-    hours > 0 ? `${zeroPrefix(hours)}${hours}:` : "";
-  return `${hourString}${zeroPrefix(
-    minutes
-  )}${minutes}:${zeroPrefix(seconds)}${seconds}`;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { startTimer } from "../features/gameplay/gameplaySlice";
+import { useNavigate } from "react-router-dom";
+import { formatTime } from "../utils";
 
 const TopBar = ({ level }) => {
+  const dispatch = useDispatch();
   const [timer, setTimer] = useState(0);
+  const { foundCharacters, stopCountdown } = useSelector(
+    (state) => state.gameplay
+  );
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((p) => p + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const navigate = useNavigate();
+
+  const handleResetClick = () => {
+    stopCountdown();
+    //reset timer
+    dispatch(startTimer());
+    //reset foundcharacters
+    dispatch(resetFoundCharacters());
+    //clear points on the picture
+    dispatch(resetPoints());
+  };
+
+  const { time } = useSelector((state) => state.gameplay);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setTimer((p) => p + 1);
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <TopBarFullWidth>
       <StyledTopBarGame>
         <CircleWrap>
-          {level.characters.map((item) => {
+          {level.characters.map((item, index) => {
+            const isChecked = foundCharacters.includes(item.id);
             return (
-              <PlayerCircle>
+              <PlayerCircle checked={isChecked}>
                 <img
                   src={`/characters/${level.name}/${item.img}`}
                   alt=""
@@ -48,17 +65,31 @@ const TopBar = ({ level }) => {
             );
           })}
         </CircleWrap>
-        <Timer>{formatTime(timer)}</Timer>
-        <Button
-          bg={{
-            H: 266,
-            S: 50,
-            L: 65,
-          }}
-          color="#fff"
-        >
-          reset
-        </Button>
+        <Timer>{formatTime(time)}</Timer>
+        <ButtonWrap>
+          <Button
+            bg={{
+              H: 266,
+              S: 50,
+              L: 65,
+            }}
+            color="#fff"
+            onClick={handleResetClick}
+          >
+            reset
+          </Button>
+          <Button
+            bg={{
+              H: 266,
+              S: 50,
+              L: 65,
+            }}
+            color="#fff"
+            onClick={() => navigate("/")}
+          >
+            home
+          </Button>
+        </ButtonWrap>
         <GameIcon />
       </StyledTopBarGame>
     </TopBarFullWidth>

@@ -35,7 +35,7 @@ const LevelSelect = () => {
         )}
         {levels.map((item, index) => {
           return (
-            <Link to={`game/${item.id}`}>
+            <Link key={index} to={`game/${item.id}`}>
               <LevelSelectCard
                 changeCardWidth={changeCardWidth}
                 key={index}

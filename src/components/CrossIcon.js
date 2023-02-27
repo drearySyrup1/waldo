@@ -22,7 +22,7 @@ const CrossIcon = ({ updateref, ...props }) => {
 
   useEffect(() => {
     updateref(elementRef.current);
-  }, []);
+  }, [updateref]);
 
   return (
     <span ref={elementRef}>

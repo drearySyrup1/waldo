@@ -9,10 +9,8 @@ const LevelSelectCard = ({ name, image, changeCardWidth }) => {
   useEffect(() => {
     const handleResize = () => {
       const { width } = cardRef.current.getBoundingClientRect();
-      if (previousWidth !== width) {
-        changeCardWidth(width);
-        previousWidth = width;
-      }
+      changeCardWidth(width);
+      previousWidth = width;
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -21,7 +19,7 @@ const LevelSelectCard = ({ name, image, changeCardWidth }) => {
   return (
     <StyledLevelSelectCard ref={cardRef}>
       <h1 className="name">{name}</h1>
-      <img src={`./levels/${image}`} alt="" />
+      <img src={`./levels/thumbnails/${image}`} alt="" />
     </StyledLevelSelectCard>
   );
 };
