@@ -17,6 +17,7 @@ import {
   changeCharacter,
   addNewPoint,
 } from "../features/gameplay/gameplaySlice";
+import Prompt from "./Prompt/Prompt";
 const POINT_SIZE = 50;
 
 const owl = {
@@ -40,6 +41,7 @@ const checkIfFound = ({ x, y, coords }) => {
 const GamePlay = ({ level }) => {
   const gameWrapRef = useRef(); // later to check for menu select if goes out of the screen
   const imgWrapRef = useRef();
+  const [promptVisible, setPromptVisible] = useState(false);
   const [crossVisible, setCrossVisible] = useState(true);
   const [crossCords, setCrossCords] = useState({ x: 0, y: 0 });
   const [isSelectVisible, setIsSelectVisible] = useState(false);
@@ -75,8 +77,10 @@ const GamePlay = ({ level }) => {
 
   // to stop timer when all characeters are found
   useEffect(() => {
-    if (foundCharacters.length === level.characters.length)
+    if (foundCharacters.length === level.characters.length) {
       stopCountdown();
+      setPromptVisible(true);
+    }
   }, [foundCharacters, level.characters, stopCountdown]);
 
   const addPoint = ({ x, y, rect, green }) => {
@@ -194,6 +198,7 @@ const GamePlay = ({ level }) => {
 
   return (
     <StyledGamePlay>
+      {promptVisible && <Prompt />}
       <StyledImgWrapper ref={gameWrapRef}>
         {isSelectVisible && (
           <SelectMenu
