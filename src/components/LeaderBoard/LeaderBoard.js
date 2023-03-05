@@ -46,6 +46,11 @@ const LeaderBoard = () => {
   const [page, setPage] = useState(1);
   const lastDoc = useRef();
   const history = useRef({});
+  const [isEnd, setIsEnd] = useState(false);
+
+  useEffect(() => {
+    if (isEnd) setIsEnd(false);
+  }, [page]);
 
   const nextPage = async () => {
     const collectionRef = collection(
@@ -64,7 +69,10 @@ const LeaderBoard = () => {
 
     history.current[`${page + 1}`] = subCollectionSnapshot.docs[0];
 
-    if (subCollectionSnapshot.empty) return;
+    if (subCollectionSnapshot.empty) {
+      setIsEnd(true);
+      return;
+    }
 
     lastDoc.current =
       subCollectionSnapshot.docs[
@@ -139,6 +147,7 @@ const LeaderBoard = () => {
     }
 
     getData();
+    setPage(1);
   }, [id, db]);
   return (
     <StyledLeaderboard>
@@ -203,6 +212,7 @@ const LeaderBoard = () => {
           }}
           color="#fff"
           onClick={nextPage}
+          disabled={isEnd ? true : false}
         >
           Next Page
         </Button>
