@@ -14,3 +14,39 @@ export function formatTime(time) {
     minutes
   )}${minutes}:${zeroPrefix(seconds)}${seconds}`;
 }
+
+export function santizie(string) {
+  harmfulSymbols.forEach(
+    (symbol) =>
+      (string = string.replace(new RegExp(`${symbol}`, "g"), ""))
+  );
+  return string;
+}
+
+const harmfulSymbols = [
+  "<",
+  ">",
+  "&",
+  '"',
+  "'",
+  "/",
+  "'",
+  ":",
+  ";",
+  "\\+",
+  "-",
+  "=",
+  "~",
+  "|",
+  "^",
+  "%",
+  "\\*",
+  "$",
+  "{",
+  "}",
+  "\\(",
+  "\\)",
+  "\\$",
+  "'",
+  '"',
+];

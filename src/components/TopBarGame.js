@@ -11,6 +11,7 @@ import {
   setStopCountdown,
   resetFoundCharacters,
   resetPoints,
+  hidePrompt,
 } from "../features/gameplay/gameplaySlice";
 import { Button } from "./styles/Button.styled";
 import { GameIcon } from "./GithubIcon";
@@ -37,6 +38,7 @@ const TopBar = ({ level }) => {
     dispatch(resetFoundCharacters());
     //clear points on the picture
     dispatch(resetPoints());
+    dispatch(hidePrompt());
   };
 
   const { time } = useSelector((state) => state.gameplay);

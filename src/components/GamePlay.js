@@ -16,6 +16,8 @@ import {
   addFoundCharacter,
   changeCharacter,
   addNewPoint,
+  showPrompt,
+  hidePrompt,
 } from "../features/gameplay/gameplaySlice";
 import Prompt from "./Prompt/Prompt";
 const POINT_SIZE = 50;
@@ -41,7 +43,7 @@ const checkIfFound = ({ x, y, coords }) => {
 const GamePlay = ({ level }) => {
   const gameWrapRef = useRef(); // later to check for menu select if goes out of the screen
   const imgWrapRef = useRef();
-  const [promptVisible, setPromptVisible] = useState(false);
+  const { promptVisible } = useSelector((state) => state.gameplay);
   const [crossVisible, setCrossVisible] = useState(true);
   const [crossCords, setCrossCords] = useState({ x: 0, y: 0 });
   const [isSelectVisible, setIsSelectVisible] = useState(false);
@@ -62,12 +64,10 @@ const GamePlay = ({ level }) => {
   const { stopCountdown, points } = useSelector(
     (state) => state.gameplay
   );
-  const { clearTimerFn } = useSelector((state) => state.gameplay);
   const [isWhiteCircleVisible, setIsWhiteCircleVisible] =
     useState(false);
   const crossRef = useRef();
   const updateCrossRef = (newRef) => (crossRef.current = newRef);
-
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--point-size",
@@ -79,7 +79,7 @@ const GamePlay = ({ level }) => {
   useEffect(() => {
     if (foundCharacters.length === level.characters.length) {
       stopCountdown();
-      setPromptVisible(true);
+      dispatch(showPrompt());
     }
   }, [foundCharacters, level.characters, stopCountdown]);
 
@@ -198,7 +198,7 @@ const GamePlay = ({ level }) => {
 
   return (
     <StyledGamePlay>
-      {promptVisible && <Prompt />}
+      {promptVisible && <Prompt level={level} />}
       <StyledImgWrapper ref={gameWrapRef}>
         {isSelectVisible && (
           <SelectMenu

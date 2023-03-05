@@ -6,12 +6,19 @@ const initialState = {
   stopCountdown: null,
   time: 0,
   points: [],
+  promptVisible: false,
 };
 
 const gameplaySlice = createSlice({
   name: "gameplay",
   initialState,
   reducers: {
+    showPrompt: (state) => {
+      state.promptVisible = true;
+    },
+    hidePrompt: (state) => {
+      state.promptVisible = false;
+    },
     changeCharacter: (state, action) => {
       state.selectedCharacter = action.payload;
     },
@@ -54,9 +61,7 @@ export const startTimer = createAsyncThunk(
       gameplaySlice.actions;
     dispatch(setTime(0));
     return new Promise((resolve, reject) => {
-      console.log("inside promise");
       const interval = setInterval(() => {
-        console.log("works");
         dispatch(increaseTime());
       }, 1000);
       dispatch(setStopCountdown(() => clearInterval(interval)));
@@ -74,4 +79,6 @@ export const {
   resetFoundCharacters,
   addNewPoint,
   resetPoints,
+  showPrompt,
+  hidePrompt,
 } = gameplaySlice.actions;

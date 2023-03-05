@@ -31,7 +31,7 @@ const fadeOut = keyframes`
 `;
 
 export const StyledPrompt = styled.div`
-  --height: 200px;
+  --height: 270px;
   position: fixed;
   height: var(--height);
   top: calc(50% - var(--height) / 2);
@@ -63,6 +63,11 @@ export const StyledPrompt = styled.div`
   }
 `;
 
+export const InfoMsg = styled.p`
+  font-weight: 100;
+  font-size: 0.8rem !important;
+`;
+
 const ResponseStyles = css`
   font-size: 1rem;
   animation: ${fadeIn} 700ms linear 2 alternate forwards;
@@ -79,4 +84,5 @@ export const SuccessIcon = styled(BsCheckCircleFill)`
 
 export const ErrorIcon = styled(MdError)`
   ${ResponseStyles}
+  color: #b02222;
 `;

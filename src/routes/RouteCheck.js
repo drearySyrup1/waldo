@@ -5,10 +5,10 @@ import {
   resetFoundCharacters,
   resetPoints,
   startTimer,
+  hidePrompt,
 } from "../features/gameplay/gameplaySlice";
 
 const RouteCheck = () => {
-  console.log("render routecheck");
   const location = useLocation();
   const dispatch = useDispatch();
   const stopCountdownRef = useRef();
@@ -21,8 +21,7 @@ const RouteCheck = () => {
 
     if (regex.test(location.pathname)) {
       // The URL has changed, handle it as needed
-      console.log("reset timer now");
-
+      dispatch(hidePrompt());
       dispatch(startTimer());
 
       //reset timer
