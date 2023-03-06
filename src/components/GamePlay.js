@@ -11,13 +11,10 @@ import Point from "./Point";
 import CrossIcon from "./CrossIcon";
 import SelectMenu from "./SelectMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { startTimer } from "../features/gameplay/gameplaySlice";
 import {
   addFoundCharacter,
-  changeCharacter,
   addNewPoint,
   showPrompt,
-  hidePrompt,
 } from "../features/gameplay/gameplaySlice";
 import Prompt from "./Prompt/Prompt";
 const POINT_SIZE = 50;

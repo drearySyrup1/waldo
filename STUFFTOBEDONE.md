@@ -1,20 +1,22 @@
-- add remaining characters and their coordinates
+- BUGS
+  GAMEPLAY
 
-  TODO:
+  - When pressing near right corner character select menu gets hidden
+    because its always showing on the right of the mouse, add some code
+    to determine if its on right and then put it on left
 
-  - Add remaining characters and coordinates
+  - When in the game and resizing window, LevelSelectCard event listener is not removed and it causes it to fire hundreds of times
+    Level Select Card event listener was for when on mobile to make the level card full width
+    of the screen for the horizontal scroll
 
   PROMPT
 
   - Sanitize prompt input | FUNCTION CREATED
   - Send to database
-  - Show appropriate icon if entry into database was success | DONE
   - Clear input on submit
   - Hide prompt on submit
   - Maybe redirect back to home screen (And reset found characters if not done by redirect)
 
   LEADERBOARD
-
-  - Show appropriate message if no data for leadersboard | DONE
 
 - maybe add later loading animation until picture is fully
