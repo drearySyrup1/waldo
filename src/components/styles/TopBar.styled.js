@@ -56,6 +56,10 @@ export const Circle = styled.div`
   display: grid;
   place-items: center;
   cursor: pointer;
+
+  & img {
+    width: 90%;
+  }
 `;
 
 export const CircleWrap = styled.div`

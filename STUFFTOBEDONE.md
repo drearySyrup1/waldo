@@ -1,6 +1,9 @@
 - add remaining characters and their coordinates
 
   TODO:
+
+  - Add remaining characters and coordinates
+
   PROMPT
 
   - Sanitize prompt input | FUNCTION CREATED
@@ -12,6 +15,6 @@
 
   LEADERBOARD
 
-  - Show appropriate message if no data for leadersboard
+  - Show appropriate message if no data for leadersboard | DONE
 
 - maybe add later loading animation until picture is fully
