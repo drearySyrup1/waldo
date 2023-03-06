@@ -131,6 +131,13 @@ const LeaderBoard = () => {
         query(collectionRef, orderBy("time", "asc"), limit(7))
       );
 
+      if (subCollectionSnapshot.empty) {
+        setScores([
+          { name: "NO SCORES YET", time: 0, blank: true },
+        ]);
+        return;
+      }
+
       history.current[`${page}`] = subCollectionSnapshot.docs[0];
 
       lastDoc.current =
@@ -179,13 +186,14 @@ const LeaderBoard = () => {
           return (
             <TableEntry>
               <ScoreAlign>
-                {(page - 1) * 7 + index + 1}
-                {[0, 1, 2].includes((page - 1) * 7 + index) && (
-                  <Medal color={String(index + 1)} />
-                )}
+                {score.blank || (page - 1) * 7 + index + 1}
+                {[0, 1, 2].includes((page - 1) * 7 + index) &&
+                  (score.blank || (
+                    <Medal color={String(index + 1)} />
+                  ))}
               </ScoreAlign>
               <p>{score.name}</p>
-              <p>{formatTime(score.time)}</p>
+              <p>{score.blank || formatTime(score.time)}</p>
             </TableEntry>
           );
         })}
