@@ -93,7 +93,6 @@ const GamePlay = ({ level }) => {
   };
 
   const handleMenuSelect = (id, cords) => {
-    console.log(cords);
     if (
       checkIfFound({
         x: whiteCircleLocation.corner.x,
@@ -122,7 +121,6 @@ const GamePlay = ({ level }) => {
   };
 
   const handleClick = (e) => {
-    console.log(stopCountdown);
     if (foundCharacters.length === level.characters.length) {
       return;
     }
@@ -136,10 +134,9 @@ const GamePlay = ({ level }) => {
 
     const gameRect = gameWrapRef.current.getBoundingClientRect();
 
-    console.log(gameRect);
-
     const crossX = e.clientX - rect.left;
     const crossY = e.clientY - rect.top;
+    // used to find coords for new characters when adding new levels
 
     console.log(`
       X: ${crossX}
