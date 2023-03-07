@@ -146,10 +146,19 @@ const GamePlay = ({ level }) => {
       Y: ${crossY}
     `);
 
-    setSelectLocation({
-      x: crossX + POINT_SIZE,
-      y: crossY,
-    });
+    // if mouse is to close to right side then put the
+    // select menu on the left instead of right of the mouse
+    if (e.clientX + 340 >= gameRect.right) {
+      setSelectLocation({
+        x: crossX - 300 - POINT_SIZE,
+        y: crossY,
+      });
+    } else {
+      setSelectLocation({
+        x: crossX + POINT_SIZE,
+        y: crossY,
+      });
+    }
     setIsSelectVisible(true);
 
     // 21 is offset for the circle to appear around the mouse in the center
