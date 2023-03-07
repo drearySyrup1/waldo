@@ -15,12 +15,20 @@ export function formatTime(time) {
   )}${minutes}:${zeroPrefix(seconds)}${seconds}`;
 }
 
-export function santizie(string) {
+export function sanitize(string) {
   harmfulSymbols.forEach(
     (symbol) =>
       (string = string.replace(new RegExp(`${symbol}`, "g"), ""))
   );
   return string;
+}
+
+export function wait(time) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
 }
 
 const harmfulSymbols = [

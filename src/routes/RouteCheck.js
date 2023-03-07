@@ -6,6 +6,7 @@ import {
   resetPoints,
   startTimer,
   hidePrompt,
+  showPrompt,
 } from "../features/gameplay/gameplaySlice";
 
 const RouteCheck = () => {

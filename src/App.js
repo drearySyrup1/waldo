@@ -7,6 +7,7 @@ import RouteCheck from "./routes/RouteCheck";
 
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
+import Admin from "./components/Admin";
 const theme = {
   colors: {
     body: "hsl(0 0% 13%)",
