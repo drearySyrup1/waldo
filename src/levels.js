@@ -172,19 +172,34 @@ const levels = [
       {
         name: "Boy",
         img: "boy.png",
-        cords: {},
+        cords: {
+          startX: 490.3,
+          endX: 503.3,
+          startY: 1412.5,
+          endY: 1429.5,
+        },
         id: "d38e5bce-a50c-4284-b9c6-5407402b9cf2",
       },
       {
         name: "Car",
         img: "car.png",
-        cords: {},
+        cords: {
+          startX: 829.63,
+          endX: 878.3,
+          startY: 1050.8,
+          endY: 1077.8,
+        },
         id: "08245fef-1832-4fa4-9981-6f831a29bf44",
       },
       {
         name: "Duck",
         img: "duck.png",
-        cords: {},
+        cords: {
+          startX: 97.3,
+          endX: 117.3,
+          startY: 400.8,
+          endY: 410.8,
+        },
         id: "a5f43a06-8929-4dba-bd1d-3ee5925c1262",
       },
     ],

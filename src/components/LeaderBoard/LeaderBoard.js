@@ -17,11 +17,8 @@ import levels from "../../levels.js";
 import { NavLink, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
-  addDoc,
   collection,
   doc,
-  endBefore,
-  getDoc,
   getDocs,
   limit,
   orderBy,
