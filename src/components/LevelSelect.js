@@ -15,9 +15,12 @@ const LevelSelect = () => {
   const [displayInfo, setDisplayInfo] = useState(true);
   const gridRef = useRef();
 
-  const changeCardWidth = useCallback((newValue) => {
+  // const changeCardWidth = useCallback((newValue) => {
+  //   setCardWidth(newValue);
+  // }, []);
+  const changeCardWidth = (newValue) => {
     setCardWidth(newValue);
-  }, []);
+  };
 
   return (
     <StyledLevelSelect>
