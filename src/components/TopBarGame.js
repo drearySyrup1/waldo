@@ -58,7 +58,7 @@ const TopBar = ({ level }) => {
           {level.characters.map((item, index) => {
             const isChecked = foundCharacters.includes(item.id);
             return (
-              <PlayerCircle checked={isChecked}>
+              <PlayerCircle key={index} checked={isChecked}>
                 <img
                   src={`/characters/${level.name}/${item.img}`}
                   alt=""

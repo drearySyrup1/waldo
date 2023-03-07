@@ -37,10 +37,11 @@ const SelectMenu = ({ x, y, level, handleMenuSelect }) => {
   );
   return (
     <Menu x={x} y={y}>
-      {level.characters.map((item) => {
+      {level.characters.map((item, index) => {
         if (!foundCharacters.includes(item.id))
           return (
             <Option
+              key={index}
               onClick={() => handleMenuSelect(item.id, item.cords)}
             >
               <PlayerCircle>

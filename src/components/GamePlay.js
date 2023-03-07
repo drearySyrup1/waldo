@@ -41,7 +41,7 @@ const GamePlay = ({ level }) => {
   const gameWrapRef = useRef(); // later to check for menu select if goes out of the screen
   const imgWrapRef = useRef();
   const { promptVisible } = useSelector((state) => state.gameplay);
-  const [crossVisible, setCrossVisible] = useState(true);
+  const [crossVisible, setCrossVisible] = useState(false);
   const [crossCords, setCrossCords] = useState({ x: 0, y: 0 });
   const [isSelectVisible, setIsSelectVisible] = useState(false);
   const [selectLocation, setSelectLocation] = useState({
@@ -216,7 +216,7 @@ const GamePlay = ({ level }) => {
         )}
         <PointWrap ref={imgWrapRef} onClick={handleClick}>
           <CrossIcon
-            visible={crossVisible}
+            visible={crossVisible.toString()}
             x={crossCords.x}
             y={crossCords.y}
             updateref={updateCrossRef}

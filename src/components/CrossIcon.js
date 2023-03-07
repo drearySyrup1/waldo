@@ -9,7 +9,7 @@ const StyledCross = styled(RxCross2)`
   top: ${({ y }) => `${y}px`};
   left: ${({ x }) => `${x}px`};
   translate: -50% -50%;
-  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  opacity: ${({ visible }) => (visible === "true" ? 1 : 0)};
   transition: opacity 300ms;
 
   .fadeout {
