@@ -15,8 +15,10 @@ import {
   addFoundCharacter,
   addNewPoint,
   showPrompt,
+  startTimer,
 } from "../features/gameplay/gameplaySlice";
 import Prompt from "./Prompt/Prompt";
+import LoadingScreen from "./LoadingScreen";
 const POINT_SIZE = 50;
 
 const owl = {
@@ -40,6 +42,7 @@ const checkIfFound = ({ x, y, coords }) => {
 const GamePlay = ({ level }) => {
   const gameWrapRef = useRef(); // later to check for menu select if goes out of the screen
   const imgWrapRef = useRef();
+  const [isLoading, setIsLoading] = useState(true);
   const { promptVisible } = useSelector((state) => state.gameplay);
   const [crossVisible, setCrossVisible] = useState(false);
   const [crossCords, setCrossCords] = useState({ x: 0, y: 0 });
@@ -71,6 +74,12 @@ const GamePlay = ({ level }) => {
       `${POINT_SIZE}px`
     );
   }, []);
+
+  const handleLoad = (e) => {
+    setIsLoading(false);
+    stopCountdown();
+    dispatch(startTimer());
+  };
 
   // to stop timer when all characeters are found
   useEffect(() => {
@@ -200,44 +209,51 @@ const GamePlay = ({ level }) => {
   };
 
   return (
-    <StyledGamePlay>
-      {promptVisible && <Prompt level={level} />}
-      <StyledImgWrapper ref={gameWrapRef}>
-        {isSelectVisible && (
-          <SelectMenu
-            level={level}
-            x={selectLocation.x}
-            y={selectLocation.y}
-            handleMenuSelect={handleMenuSelect}
-          />
-        )}
-        <PointWrap ref={imgWrapRef} onClick={handleClick}>
-          <CrossIcon
-            visible={crossVisible.toString()}
-            x={crossCords.x}
-            y={crossCords.y}
-            updateref={updateCrossRef}
-          />
-          {isWhiteCircleVisible && (
-            <Point
-              x={whiteCircleLocation.x}
-              y={whiteCircleLocation.y}
+    <>
+      {isLoading && <LoadingScreen />}
+      <StyledGamePlay>
+        {promptVisible && <Prompt level={level} />}
+        <StyledImgWrapper ref={gameWrapRef}>
+          {isSelectVisible && (
+            <SelectMenu
+              level={level}
+              x={selectLocation.x}
+              y={selectLocation.y}
+              handleMenuSelect={handleMenuSelect}
             />
           )}
-          {points.map((point, index) => {
-            return (
+          <PointWrap ref={imgWrapRef} onClick={handleClick}>
+            <CrossIcon
+              visible={crossVisible.toString()}
+              x={crossCords.x}
+              y={crossCords.y}
+              updateref={updateCrossRef}
+            />
+            {isWhiteCircleVisible && (
               <Point
-                key={index}
-                x={point.x}
-                y={point.y}
-                green={point.green}
+                x={whiteCircleLocation.x}
+                y={whiteCircleLocation.y}
               />
-            );
-          })}
-          <StyledLevelImg src={`/levels/${level.image}`} alt="" />
-        </PointWrap>
-      </StyledImgWrapper>
-    </StyledGamePlay>
+            )}
+            {points.map((point, index) => {
+              return (
+                <Point
+                  key={index}
+                  x={point.x}
+                  y={point.y}
+                  green={point.green}
+                />
+              );
+            })}
+            <StyledLevelImg
+              onLoad={handleLoad}
+              src={`/levels/${level.image}`}
+              alt=""
+            />
+          </PointWrap>
+        </StyledImgWrapper>
+      </StyledGamePlay>
+    </>
   );
 };
 
